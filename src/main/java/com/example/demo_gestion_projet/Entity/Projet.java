@@ -1,15 +1,13 @@
 package com.example.demo_gestion_projet.Entity;
 
 import com.example.demo_gestion_projet.Enum.Statu;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 @Entity
 @Data
@@ -20,7 +18,9 @@ public class Projet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private  String name;
+   // @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate debut;
+   // @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate Fin;
     @OneToMany(mappedBy = "projet")
     private List<Users> users;

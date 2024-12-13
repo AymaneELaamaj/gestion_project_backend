@@ -1,3 +1,4 @@
+/*
 package com.example.demo_gestion_projet.Security;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
@@ -29,9 +30,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.crypto.spec.SecretKeySpec;
 
-@Configuration
-@EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+//@Configuration
+//@EnableWebSecurity
+//@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
      @Value("${jwt.secret}")
@@ -93,3 +94,4 @@ public class SecurityConfig {
         return source;
     }
 }
+*/

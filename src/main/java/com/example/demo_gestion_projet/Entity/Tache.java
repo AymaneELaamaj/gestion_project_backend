@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -18,7 +19,7 @@ public class Tache {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tid;
     private String name;
-    private Date debut;
+    private LocalDate debut;
 
     public Statu getStatus() {
         return status;
@@ -30,7 +31,7 @@ public class Tache {
 
     @Enumerated(EnumType.STRING)
     private Statu status;
-    private Date Fin;
+    private LocalDate Fin;
     @OneToOne
     @JoinColumn(name = "users_id")
 
@@ -58,19 +59,19 @@ public class Tache {
         this.name = name;
     }
 
-    public Date getDebut() {
+    public LocalDate getDebut() {
         return debut;
     }
 
-    public void setDebut(Date debut) {
+    public void setDebut(LocalDate debut) {
         this.debut = debut;
     }
 
-    public Date getFin() {
+    public LocalDate getFin() {
         return Fin;
     }
 
-    public void setFin(Date fin) {
+    public void setFin(LocalDate fin) {
         Fin = fin;
     }
 
