@@ -1,6 +1,8 @@
 package com.example.demo_gestion_projet.Controller;
 
+import com.example.demo_gestion_projet.DTO.UpdateStatus;
 import com.example.demo_gestion_projet.Entity.Projet;
+import com.example.demo_gestion_projet.Enum.Statu;
 import com.example.demo_gestion_projet.Repository.ProjetRepo;
 import com.example.demo_gestion_projet.Services.ProjectService;
 import org.springframework.aop.target.LazyInitTargetSource;
@@ -28,6 +30,11 @@ public class ProjectController {
     public Projet addproject(@RequestBody Projet projet) {
         return projectService.addproject(projet);
     }
+    @PutMapping("/update/{id}")
+    public Projet updateprojectstatus(@PathVariable Long id, @RequestBody UpdateStatus updateStatus) {
+        return projectService.updateprojectstatus(id,updateStatus);
+    }
+
     @DeleteMapping("/{id}")
     //@PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public void removeproject(@PathVariable Long id) {
