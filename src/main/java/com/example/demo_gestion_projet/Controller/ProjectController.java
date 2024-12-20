@@ -35,7 +35,7 @@ public class ProjectController {
         return projectService.updateprojectstatus(id,updateStatus);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     //@PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public void removeproject(@PathVariable Long id) {
         projectService.removeproject(id);

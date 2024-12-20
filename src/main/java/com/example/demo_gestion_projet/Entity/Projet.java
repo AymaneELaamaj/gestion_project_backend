@@ -22,7 +22,7 @@ public class Projet {
     private LocalDate debut;
    // @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate Fin;
-    @OneToMany(mappedBy = "projet")
+    @OneToMany(mappedBy = "projet",cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Users> users;
     public Statu getStatus() {
         return status;
