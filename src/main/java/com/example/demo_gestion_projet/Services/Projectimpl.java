@@ -8,7 +8,10 @@ import com.example.demo_gestion_projet.Repository.ProjetRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class Projectimpl implements ProjectService{
     @Autowired
@@ -34,6 +37,16 @@ public class Projectimpl implements ProjectService{
                 .orElseThrow(() -> new RuntimeException("Projet introuvable avec l'ID : " + id));
 
 
+
+    }
+
+    @Override
+    public Map<Statu, Long> getcountstatus() {
+        Map<Statu,Long> map=new HashMap<>();
+        map.put(Statu.En_cours,projetRepo.countBystatus(Statu.En_cours));
+        map.put(Statu.Non_commencé,projetRepo.countBystatus(Statu.Non_commencé));
+        map.put(Statu.Terminé,projetRepo.countBystatus(Statu.Terminé));
+        return map;
 
     }
 

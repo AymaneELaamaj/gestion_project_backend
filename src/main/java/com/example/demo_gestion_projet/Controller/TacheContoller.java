@@ -35,7 +35,7 @@
         public Users addtachetouser(@RequestBody Addusertoprj addusertoprj){
             return tacheService.addtachetouser(addusertoprj);
         }
-        @DeleteMapping("/{id}")
+        @DeleteMapping("/delete/{id}")
       //  @PreAuthorize("hasAuthority('SCOPE_ADMIN')")//
         public void removetache(@PathVariable Long id){
             tacheService.removetache(id);

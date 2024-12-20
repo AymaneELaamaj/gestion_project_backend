@@ -7,6 +7,7 @@ import com.example.demo_gestion_projet.Entity.Users;
 import com.example.demo_gestion_projet.Enum.Statu;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ProjectService {
     public List<Projet> PROJET_LIST();
@@ -21,4 +22,5 @@ public interface ProjectService {
     public void removeproject(Long id);
 
     Projet updateprojectstatus(Long id, UpdateStatus updateStatus);
+    Map<Statu, Long> getcountstatus();
 }

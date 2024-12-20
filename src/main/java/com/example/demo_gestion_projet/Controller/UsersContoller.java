@@ -34,7 +34,7 @@ public class UsersContoller {
     public Projet addusertoprj(@RequestBody Addusertoprj addusertoprj){
         return usersServcie.addusertoproect(addusertoprj);
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     //@PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public void removeuser(@PathVariable Long id){
         usersServcie.removeUsers(id);

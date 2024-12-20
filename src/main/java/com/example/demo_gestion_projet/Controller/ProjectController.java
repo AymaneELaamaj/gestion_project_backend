@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/Project")
@@ -33,6 +34,10 @@ public class ProjectController {
     @PutMapping("/update/{id}")
     public Projet updateprojectstatus(@PathVariable Long id, @RequestBody UpdateStatus updateStatus) {
         return projectService.updateprojectstatus(id,updateStatus);
+    }
+    @GetMapping("/getstatus")
+    public Map<Statu,Long>getstatus(){
+        return projectService.getcountstatus();
     }
 
     @DeleteMapping("/delete/{id}")
