@@ -7,6 +7,7 @@ import com.example.demo_gestion_projet.Entity.Users;
 import com.example.demo_gestion_projet.Services.UsersServcie;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,22 +21,22 @@ public class UsersContoller {
     @Autowired
     private UsersServcie usersServcie;
     @GetMapping("/findall")
-    // @PreAuthorize("hasAuthority('SCOPE_USER')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
     public List<Users> findusers(){
         return usersServcie.USERS_LIST();
     }
     @PostMapping("/saveusers")
-    //  @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public Users saveusers(@RequestBody Users users){
         return usersServcie.addUsers(users);
     }
     @PostMapping("/addtoproj")
-    // @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public Projet addusertoprj(@RequestBody Addusertoprj addusertoprj){
         return usersServcie.addusertoproect(addusertoprj);
     }
     @DeleteMapping("/delete/{id}")
-    //@PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public void removeuser(@PathVariable Long id){
         usersServcie.removeUsers(id);
     }

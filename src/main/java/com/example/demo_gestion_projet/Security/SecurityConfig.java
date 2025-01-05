@@ -1,7 +1,9 @@
-/*
+
 package com.example.demo_gestion_projet.Security;
 
+import com.example.demo_gestion_projet.Security.Service.CustomUserDetailsService;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,26 +25,34 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.crypto.spec.SecretKeySpec;
+import javax.sql.DataSource;
 
-//@Configuration
-//@EnableWebSecurity
-//@EnableMethodSecurity(prePostEnabled = true)
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
+@AllArgsConstructor
 public class SecurityConfig {
-
-     @Value("${jwt.secret}")
+    private CustomUserDetailsService userDetailsService;
+    //@Value("${jwt.secret}")
     private String secretKey;
-    @Bean
+   // @Bean
+    public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource){
+        return  new JdbcUserDetailsManager(dataSource);
+    }
+    //@Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
         PasswordEncoder passwordEncoder = passwordEncoder();
         return new InMemoryUserDetailsManager(
-                User.withUsername("Nissrine").password(passwordEncoder.encode("1234")).authorities("USER").build(),
-                User.withUsername("aymane").password(passwordEncoder.encode("1234")).authorities("USER", "ADMIN").build()
+                User.withUsername("Nissrine@gmail.com").password(passwordEncoder.encode("1234")).authorities("USER").build(),
+                User.withUsername("aymane@gmail.com").password(passwordEncoder.encode("1234")).authorities("USER", "ADMIN").build()
         );
     }
     @Bean
@@ -54,36 +64,38 @@ public class SecurityConfig {
         return httpSecurity
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(c -> c.disable())// utilisation de statless
-                //    .cors(Customizer.withDefaults())
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(ar -> ar
-                        .requestMatchers("/auth/login/**").permitAll()
+                        .requestMatchers("/auth/login").permitAll()
                         .anyRequest().authenticated()
+
                 )
                 //.httpBasic(Customizer.withDefaults())// c"est le fait d'authenifie dans chaque requete
                 .oauth2ResourceServer(oa -> oa.jwt(Customizer.withDefaults()))
+
 
                 .build();
     }
     @Bean
     public JwtEncoder jwtEncoder() {
-       // secretKey = "azertyuiop912AYEOGXY54ALSAzertyuiopsdfghjklockzjncvunzocofoc";
+       secretKey = "azertyuiop912AYEOGXY54ALSAzertyuiopsdfghjklockzjncvunzocofoc";
         return new NimbusJwtEncoder(new ImmutableSecret<>(secretKey.getBytes()));
     }
 
     @Bean
     public JwtDecoder jwtDecoder() {
-     //  secretKey = "azertyuiop912AYEOGXY54ALSAzertyuiopsdfghjklockzjncvunzocofoc";
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), "RSA");
+      secretKey = "azertyuiop912AYEOGXY54ALSAzertyuiopsdfghjklockzjncvunzocofoc";
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), "HMACSHA256");
         return NimbusJwtDecoder.withSecretKey(secretKeySpec).macAlgorithm(MacAlgorithm.HS256).build();
     }
     @Bean
-    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService) {
+    public AuthenticationManager authenticationManager (UserDetailsService userDetailsService) {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         return new ProviderManager(daoAuthenticationProvider);
     }
-   // @Bean
+    @Bean
     public CorsConfigurationSource corsConfigurationSource ( ) {
         CorsConfiguration corsConfiguration=new CorsConfiguration();
         corsConfiguration.addAllowedOrigin("*");// Changez cela selon l'origine de votre client
@@ -94,4 +106,4 @@ public class SecurityConfig {
         return source;
     }
 }
-*/
+
